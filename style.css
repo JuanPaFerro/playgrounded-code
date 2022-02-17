@@ -11,8 +11,6 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   margin: 0;
-  padding: 0;
-  height: 100vh;
   width: 100vw;
 }
 #app {
@@ -20,14 +18,25 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-section {
+html,
+body,
+.grid {
   height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  padding: 0;
 }
-
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 5px 1fr;
+  grid-template-rows: 1fr 5px 1fr;
+}
+.vertical-gutter {
+  grid-area: 1 / 2 / 4 / 2;
+  background-color:#fff;
+}
+.horizontal-gutter {
+  grid-area: 2 / 1 / 2 / 4;
+  background-color:#fff;
+}
 iframe {
   width: 100%;
   height: 100%;
@@ -42,7 +51,8 @@ textarea {
   color: #fff;
   font-family: monospace;
   font-size: 24px;
+  resize: none;
 }
-textarea:focus{
+textarea:focus {
   outline: 0;
 }
