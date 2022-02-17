@@ -11,7 +11,6 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   margin: 0;
-  width: 100vw;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -31,11 +30,11 @@ body,
 }
 .vertical-gutter {
   grid-area: 1 / 2 / 4 / 2;
-  background-color:#fff;
+  background-color: #fff;
 }
 .horizontal-gutter {
   grid-area: 2 / 1 / 2 / 4;
-  background-color:#fff;
+  background-color: #fff;
 }
 iframe {
   width: 100%;
@@ -48,11 +47,23 @@ textarea {
   width: 100%;
   border: 1px solid #fff;
   background-color: #333;
+  background-repeat: no-repeat;
+  background-size: 50px;
+  background-position: bottom right;
   color: #fff;
   font-family: monospace;
-  font-size: 24px;
+  font-size: 16px;
   resize: none;
 }
 textarea:focus {
   outline: 0;
+}
+#js {
+  background-image: url('./assets/javascript.svg');
+}
+#html {
+  background-image: url('./assets/html5.svg');
+}
+#css {
+  background-image: url('./assets/css3.svg');
 }
