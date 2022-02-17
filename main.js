@@ -1,5 +1,7 @@
-const $ = selector => document.querySelector(selector)
 import Split from "split-grid"
+import {encode , decode} from "js-base64"
+
+const $ = selector => document.querySelector(selector)
 
 Split({
   columnGutters: [{
@@ -20,9 +22,9 @@ function initialize() {
   const { pathname } = window.location
   const [encodedHtml, encodedCss, encodedJs] = pathname.slice(1).split("|")
 
-  const html = window.atob(encodedHtml)
-  const css = window.atob(encodedCss)
-  const js = window.atob(encodedJs)
+  const html = decode(encodedHtml)
+  const css = decode(encodedCss)
+  const js = decode(encodedJs)
 
   $js.value = js
   $css.value = css
@@ -37,7 +39,7 @@ const update = () => {
   const css = $css.value
   const js = $js.value
 
-  const codeToURL = `${window.btoa(html)}|${window.btoa(css)}|${window.btoa(js)}`
+  const codeToURL = `${encode(html)}|${encode(css)}|${encode(js)}`
   history.replaceState(null, null, `/${codeToURL}`)
 
   const htmlToProcess = createHtml({ html, js, css })
