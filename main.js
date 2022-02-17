@@ -1,8 +1,8 @@
 const $ = selector => document.querySelector(selector)
 
-const $js = $("js")
-const $css = $("css")
-const $html = $("html")
+const $js = $("#js")
+const $css = $("#css")
+const $html = $("#html")
 
 const update = () => {
   const html = createHtml()
