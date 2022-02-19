@@ -1,7 +1,9 @@
 import { createEditor } from "./editor";
+import { encode, decode } from "js-base64";
+import { delay } from "./utilities/delay";
 import { $ } from "./utilities/dom-managment";
 import Split from "split-grid";
-import { encode, decode } from "js-base64";
+import { createHtml } from "./utilities/createHtml";
 
 Split({
   columnGutters: [
@@ -18,25 +20,24 @@ Split({
   ],
 });
 
-const { pathname } = window.location;
-!pathname.includes("|") && (window.location.pathname = "/||");
-const [encodedHtml, encodedCss, encodedJs] = pathname.slice(1).split("|");
-
 const $js = $("#js");
 const $css = $("#css");
 const $html = $("#html");
 
+const { pathname } = window.location;
+!pathname.includes("|") && (window.location.pathname = "/||");
+const [encodedHtml, encodedCss, encodedJs] = pathname.slice(1).split("|");
+
 const html = decode(encodedHtml) ?? "";
 const css = decode(encodedCss) ?? "";
 const js = decode(encodedJs) ?? "";
-console.log(html, css, js);
 
 const htmlToProcess = createHtml({ html, js, css });
 $("iframe").setAttribute("srcdoc", htmlToProcess);
 
 const htmlEditor = createEditor({
   element: $html,
-  value: html,
+  alue: html,
   language: "html",
 });
 const cssEditor = createEditor({
@@ -50,9 +51,13 @@ const jsEditor = createEditor({
   language: "javascript",
 });
 
-htmlEditor.onDidChangeModelContent(update);
-cssEditor.onDidChangeModelContent(update);
-jsEditor.onDidChangeModelContent(update);
+const UPDATE_DELAY_TIME = 200;
+const delayUpdate = delay(update, UPDATE_DELAY_TIME);
+
+htmlEditor.focus();
+htmlEditor.onDidChangeModelContent(delayUpdate);
+cssEditor.onDidChangeModelContent(delayUpdate);
+jsEditor.onDidChangeModelContent(delayUpdate);
 
 function update() {
   const html = htmlEditor.getValue();
@@ -60,21 +65,8 @@ function update() {
   const js = jsEditor.getValue();
 
   const codeToURL = `${encode(html)}|${encode(css)}|${encode(js)}`;
-  history.replaceState(null, null, `/${codeToURL}`);
+  window.history.replaceState(null, null, `/${codeToURL}`);
 
   const htmlToProcess = createHtml({ html, js, css });
   $("iframe").setAttribute("srcdoc", htmlToProcess);
-}
-function createHtml({ html, js, css }) {
-  return `<!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <style>${css}</style>
-      </head>
-      <body>
-        ${html}
-        <script> ${js} </script>
-      </body>
-    </html>`;
 }
