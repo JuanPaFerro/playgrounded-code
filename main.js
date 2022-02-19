@@ -2,7 +2,7 @@ import * as monaco from "monaco-editor";
 import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
 import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
-import jsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
+import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
 
 import Split from "split-grid";
 import { encode, decode } from "js-base64";
@@ -11,41 +11,6 @@ const $ = (selector) => document.querySelector(selector);
 const $js = $("#js");
 const $css = $("#css");
 const $html = $("#html");
-
-self.MonacoEnvironment = {
-  getWorker(_, label) {
-    if (label === "html") {
-      return new htmlWorker();
-    }
-    if (label === "css") {
-      return new cssWorker();
-    }
-    if (label === "ts") {
-      return new jsWorker();
-    }
-    return new editorWorker();
-  },
-};
-
-const htmlEditor = monaco.editor.create($html, {
-  value: "<h1>It's time to ground your code</h1>",
-  language: "html",
-  theme: "vs-dark",
-});
-const cssEditor = monaco.editor.create($css, {
-  value: "",
-  language: "css",
-  theme: "vs-dark",
-});
-const jsEditor = monaco.editor.create($js, {
-  value: "",
-  language: "javascript",
-  theme: "vs-dark",
-});
-
-htmlEditor.onDidChangeModelContent(update);
-cssEditor.onDidChangeModelContent(update);
-jsEditor.onDidChangeModelContent(update);
 
 Split({
   columnGutters: [
@@ -62,17 +27,50 @@ Split({
   ],
 });
 
-function initialize() {
-  const { pathname } = window.location;
-  const [encodedHtml, encodedCss, encodedJs] = pathname.slice(1).split("|");
+self.MonacoEnvironment = {
+  getWorker(_, label) {
+    if (label === "css") return new cssWorker();
+    if (label === "html") return new htmlWorker();
+    if (label === "typescript" || label === "javascript") return new tsWorker();
 
-  const html = decode(encodedHtml);
-  const css = decode(encodedCss);
-  const js = decode(encodedJs);
+    return new editorWorker();
+  },
+};
 
-  const htmlToProcess = createHtml({ html, js, css });
-  $("iframe").setAttribute("srcdoc", htmlToProcess);
+//initialize
+const { pathname } = window.location;
+if (!pathname.includes("|")) {
+  window.location.pathname = "/||";
 }
+const [encodedHtml, encodedCss, encodedJs] = pathname.slice(1).split("|");
+
+const html = decode(encodedHtml);
+const css = decode(encodedCss);
+const js = decode(encodedJs);
+
+const htmlEditor = monaco.editor.create($html, {
+  value: html,
+  language: "html",
+  theme: "vs-dark",
+});
+const cssEditor = monaco.editor.create($css, {
+  value: css,
+  language: "css",
+  theme: "vs-dark",
+});
+const jsEditor = monaco.editor.create($js, {
+  value: js,
+  language: "javascript",
+  theme: "vs-dark",
+});
+
+htmlEditor.onDidChangeModelContent(update);
+cssEditor.onDidChangeModelContent(update);
+jsEditor.onDidChangeModelContent(update);
+
+const htmlToProcess = createHtml({ html, js, css });
+$("iframe").setAttribute("srcdoc", htmlToProcess);
+//initialize
 
 function update() {
   const html = htmlEditor.getValue();
@@ -85,7 +83,7 @@ function update() {
   const htmlToProcess = createHtml({ html, js, css });
   $("iframe").setAttribute("srcdoc", htmlToProcess);
 }
-const createHtml = ({ html, js, css }) => {
+function createHtml({ html, js, css }) {
   return `<!DOCTYPE html>
     <html lang="en">
       <head>
@@ -97,6 +95,4 @@ const createHtml = ({ html, js, css }) => {
         <script> ${js} </script>
       </body>
     </html>`;
-};
-
-initialize();
+}
