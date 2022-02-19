@@ -8,7 +8,7 @@
 body {
   background-color: #f1f1f1;
   color: #333;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   margin: 0;
 }
@@ -42,28 +42,26 @@ iframe {
   border: 0;
   background-color: #fff;
 }
-textarea {
-  height: 100%;
-  width: 100%;
-  border: 1px solid #fff;
-  background-color: #333;
-  background-repeat: no-repeat;
-  background-size: 50px;
-  background-position: bottom right;
-  color: #fff;
-  font-family: monospace;
-  font-size: 16px;
-  resize: none;
+
+#js::after {
+  background-image: url("./assets/javascript.svg");
 }
-textarea:focus {
-  outline: 0;
+#html::after {
+  background-image: url("./assets/html5.svg");
 }
-#js {
-  background-image: url('./assets/javascript.svg');
+#css::after {
+  background-image: url("./assets/css3.svg");
 }
-#html {
-  background-image: url('./assets/html5.svg');
+
+.editor {
+  position: relative;
 }
-#css {
-  background-image: url('./assets/css3.svg');
+.editor::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  width: 64px;
+  height: 64px;
+  z-index: 1;
 }

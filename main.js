@@ -1,49 +1,89 @@
-import Split from "split-grid"
-import {encode , decode} from "js-base64"
+import * as monaco from "monaco-editor";
+import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
+import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
+import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
+import jsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
 
-const $ = selector => document.querySelector(selector)
+import Split from "split-grid";
+import { encode, decode } from "js-base64";
+
+const $ = (selector) => document.querySelector(selector);
+const $js = $("#js");
+const $css = $("#css");
+const $html = $("#html");
+
+self.MonacoEnvironment = {
+  getWorker(_, label) {
+    if (label === "html") {
+      return new htmlWorker();
+    }
+    if (label === "css") {
+      return new cssWorker();
+    }
+    if (label === "ts") {
+      return new jsWorker();
+    }
+    return new editorWorker();
+  },
+};
+
+const htmlEditor = monaco.editor.create($html, {
+  value: "<h1>It's time to ground your code</h1>",
+  language: "html",
+  theme: "vs-dark",
+});
+const cssEditor = monaco.editor.create($css, {
+  value: "",
+  language: "css",
+  theme: "vs-dark",
+});
+const jsEditor = monaco.editor.create($js, {
+  value: "",
+  language: "javascript",
+  theme: "vs-dark",
+});
+
+htmlEditor.onDidChangeModelContent(update);
+cssEditor.onDidChangeModelContent(update);
+jsEditor.onDidChangeModelContent(update);
 
 Split({
-  columnGutters: [{
-    track: 1,
-    element: $('.vertical-gutter'),
-  }],
-  rowGutters: [{
-    track: 1,
-    element: $('.horizontal-gutter'),
-  }]
-})
-
-const $js = $("#js")
-const $css = $("#css")
-const $html = $("#html")
+  columnGutters: [
+    {
+      track: 1,
+      element: $(".vertical-gutter"),
+    },
+  ],
+  rowGutters: [
+    {
+      track: 1,
+      element: $(".horizontal-gutter"),
+    },
+  ],
+});
 
 function initialize() {
-  const { pathname } = window.location
-  const [encodedHtml, encodedCss, encodedJs] = pathname.slice(1).split("|")
+  const { pathname } = window.location;
+  const [encodedHtml, encodedCss, encodedJs] = pathname.slice(1).split("|");
 
-  const html = decode(encodedHtml)
-  const css = decode(encodedCss)
-  const js = decode(encodedJs)
+  const html = decode(encodedHtml);
+  const css = decode(encodedCss);
+  const js = decode(encodedJs);
 
-  $js.value = js
-  $css.value = css
-  $html.value = html
-
-  const htmlToProcess = createHtml({ html, js, css })
-  $('iframe').setAttribute('srcdoc', htmlToProcess)
+  const htmlToProcess = createHtml({ html, js, css });
+  $("iframe").setAttribute("srcdoc", htmlToProcess);
 }
 
-const update = () => {
-  const html = $html.value
-  const css = $css.value
-  const js = $js.value
+function update() {
+  const html = htmlEditor.getValue();
+  const css = cssEditor.getValue();
+  const js = jsEditor.getValue();
 
-  const codeToURL = `${encode(html)}|${encode(css)}|${encode(js)}`
-  history.replaceState(null, null, `/${codeToURL}`)
+  const codeToURL = `${encode(html)}|${encode(css)}|${encode(js)}`;
+  history.replaceState(null, null, `/${codeToURL}`);
 
-  const htmlToProcess = createHtml({ html, js, css })
-  $('iframe').setAttribute('srcdoc', htmlToProcess)
+  const htmlToProcess = createHtml({ html, js, css });
+  $("iframe").setAttribute("srcdoc", htmlToProcess);
 }
 const createHtml = ({ html, js, css }) => {
   return `<!DOCTYPE html>
@@ -56,11 +96,7 @@ const createHtml = ({ html, js, css }) => {
         ${html}
         <script> ${js} </script>
       </body>
-    </html>`
-}
+    </html>`;
+};
 
-$js.addEventListener('input', update)
-$css.addEventListener('input', update)
-$html.addEventListener('input', update)
-
-initialize()
+initialize();

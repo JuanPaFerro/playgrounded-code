@@ -1,36 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PlayGrounded-Code</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="stylesheet" href="style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PlayGrounded-Code</title>
-</head>
-
-<body>
-  <div id="app">
-    <div class="grid">
-      <div>
-        <textarea id="html"></textarea>
-      </div>
-      <div>
-        <textarea id="js"></textarea>
-      </div>
-      <div>
-        <textarea id="css"></textarea>
-      </div>
-      <div>
-        <iframe srcdoc="<h1>It's time to ground your code</h1>"></iframe>
-      </div>
-      <div class="horizontal-gutter">
-      </div>
-      <div class="vertical-gutter">
+  <body>
+    <div id="app">
+      <div class="grid">
+        <div class="editor" id="html"></div>
+        <div class="editor" id="js"></div>
+        <div class="editor" id="css"></div>
+        <div>
+          <iframe srcdoc=""></iframe>
+        </div>
+        <div class="horizontal-gutter"></div>
+        <div class="vertical-gutter"></div>
       </div>
     </div>
-  </div>
-  <script type="module" src="/main.js"></script>
-</body>
-
+    <script type="module" src="/main.js"></script>
+  </body>
 </html>
