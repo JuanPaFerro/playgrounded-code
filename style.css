@@ -9,7 +9,6 @@ body {
   background-color: #f1f1f1;
   color: #333;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
   margin: 0;
 }
 #app {
@@ -25,8 +24,8 @@ body,
 }
 .grid {
   display: grid;
-  grid-template-columns: 1fr 5px 1fr;
-  grid-template-rows: 1fr 5px 1fr;
+  grid-template-columns: 49.8% 0.4% 49.8%;
+  grid-template-rows: 49.6% 0.8% 49.6%;
 }
 .vertical-gutter {
   grid-area: 1 / 2 / 4 / 2;

@@ -8,9 +8,26 @@ import Split from "split-grid";
 import { encode, decode } from "js-base64";
 
 const $ = (selector) => document.querySelector(selector);
+
 const $js = $("#js");
 const $css = $("#css");
 const $html = $("#html");
+
+const EDITOR_LAYOUT_OPTIONS = {
+  automaticLayout: true,
+  fontSize: 14,
+  theme: "vs-dark",
+};
+
+self.MonacoEnvironment = {
+  getWorker(_, label) {
+    if (label === "css") return new cssWorker();
+    if (label === "html") return new htmlWorker();
+    if (label === "typescript" || label === "javascript") return new tsWorker();
+
+    return new editorWorker();
+  },
+};
 
 Split({
   columnGutters: [
@@ -27,21 +44,8 @@ Split({
   ],
 });
 
-self.MonacoEnvironment = {
-  getWorker(_, label) {
-    if (label === "css") return new cssWorker();
-    if (label === "html") return new htmlWorker();
-    if (label === "typescript" || label === "javascript") return new tsWorker();
-
-    return new editorWorker();
-  },
-};
-
-//initialize
 const { pathname } = window.location;
-if (!pathname.includes("|")) {
-  window.location.pathname = "/||";
-}
+!pathname.includes("|") && (window.location.pathname = "/||");
 const [encodedHtml, encodedCss, encodedJs] = pathname.slice(1).split("|");
 
 const html = decode(encodedHtml);
@@ -51,17 +55,17 @@ const js = decode(encodedJs);
 const htmlEditor = monaco.editor.create($html, {
   value: html,
   language: "html",
-  theme: "vs-dark",
+  ...EDITOR_LAYOUT_OPTIONS,
 });
 const cssEditor = monaco.editor.create($css, {
   value: css,
   language: "css",
-  theme: "vs-dark",
+  ...EDITOR_LAYOUT_OPTIONS,
 });
 const jsEditor = monaco.editor.create($js, {
   value: js,
   language: "javascript",
-  theme: "vs-dark",
+  ...EDITOR_LAYOUT_OPTIONS,
 });
 
 htmlEditor.onDidChangeModelContent(update);
@@ -70,7 +74,6 @@ jsEditor.onDidChangeModelContent(update);
 
 const htmlToProcess = createHtml({ html, js, css });
 $("iframe").setAttribute("srcdoc", htmlToProcess);
-//initialize
 
 function update() {
   const html = htmlEditor.getValue();
