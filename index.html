@@ -56,7 +56,7 @@
         <div class="vertical-gutter"></div>
       </div>
 
-      <div id="settings" style="display: none;" class="view settings">
+      <div id="settings" style="display: none" class="view settings">
         <div class="settings-content">
           <div class="settings-item">
             <strong>
@@ -65,7 +65,7 @@
             </strong>
             Controls the display of line numbers.
             <div class="select">
-              <select>
+              <select data-for="lineNumbers">
                 <option value="on">on</option>
                 <option value="off">off</option>
                 <option value="relative">relative</option>
@@ -81,12 +81,60 @@
             </strong>
             Controls how lines should wrap.
             <div class="select">
-              <select>
+              <select data-for="wordWrap">
                 <option value="on">on</option>
                 <option value="off">off</option>
-                <option value="relative">relative</option>
-                <option value="interval">interval</option>
+                <option value="wordWrapColumn">wordWrapColumn</option>
+                <option value="bounded">bounded</option>
               </select>
+            </div>
+          </div>
+
+          <div class="settings-item">
+            <strong>
+              <span class="settings-type">Workbench:</span>
+              Color theme
+            </strong>
+            Specifies the color theme used in the workbench.
+            <div class="select">
+              <select data-for="theme">
+                <option value="vs-dark">Dark</option>
+                <option value="vs">Light</option>
+                <option value="high-contrast">High Contrast Dark</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="settings-item">
+            <strong>
+              <span class="settings-type">Editor:</span>
+              Font Size
+            </strong>
+            Controls the font size in pixels
+            <input
+              data-for="fontSize"
+              type="number"
+              class="input"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              wrap="off"
+              tabindex="1"
+              ,
+              value="14"
+            />
+          </div>
+
+          <div class="settings-item">
+            <strong>
+              <span class="settings-type">Editor > Minimap:</span>
+              Enabled
+            </strong>
+            <div>
+              <label class="checkbox">
+                <input data-for="minimap" type="checkbox" />
+                <span>Controls wheter the minimap is shown.</span>
+              </label>
             </div>
           </div>
         </div>

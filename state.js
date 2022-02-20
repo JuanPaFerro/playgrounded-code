@@ -6,22 +6,23 @@ const setLocalStorage = (key, value) =>
 
 const initialState = getLocalStorage("initialState") || {
   fontSize: 14,
-  lineNumbers: "off",
+  lineNumbers: "on",
   minimap: false,
   theme: "vs-dark",
+  wordWrap: "on",
 };
 
 const useStore = create((set) => ({
   ...initialState,
-  updateSettings: ({ setting, newValue }) => {
+  updateSettings: ({ key, value }) => {
     set((state) => {
-      const { [setting]: removeOldSetting, ...restOfState } = state;
-      const newState = {
-        ...restOfState,
-        [setting]: newValue,
+      setLocalStorage("initialState", {
+        ...state,
+        [key]: value,
+      });
+      return {
+        [key]: value,
       };
-      setLocalStorage(initialState, newState);
-      return newState;
     });
   },
 }));

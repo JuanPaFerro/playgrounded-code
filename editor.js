@@ -6,7 +6,7 @@ import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
 import { getState } from "./state";
 
-const { fontSize, lineNumbers, minimap, theme } = getState();
+const { fontSize, lineNumbers, minimap, theme, wordWrap } = getState();
 
 const EDITOR_LAYOUT_OPTIONS = {
   fontSize,
@@ -15,6 +15,7 @@ const EDITOR_LAYOUT_OPTIONS = {
   minimap: {
     enabled: minimap,
   },
+  wordWrap,
   automaticLayout: true,
   fixedOverflowWidgets: true,
   scrollBeyondLastLine: false,

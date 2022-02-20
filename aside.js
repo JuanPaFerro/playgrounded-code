@@ -9,10 +9,8 @@ buttons.forEach((b) => {
     const elementIdToShow = b.getAttribute("data-to");
     views.forEach((v) => {
        v.style.display = "none";
-       console.log(v)
     });
 
     $(`#${elementIdToShow}`).style.display = "";
-    console.log(views)
   });
 });
