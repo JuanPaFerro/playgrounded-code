@@ -5,6 +5,7 @@ import { $ } from "./utilities/dom-managment";
 import Split from "split-grid";
 import { createHtml } from "./utilities/createHtml";
 import { subscribe } from "./state";
+import "./aside";
 
 Split({
   columnGutters: [

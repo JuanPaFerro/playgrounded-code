@@ -4,20 +4,23 @@ import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
 import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
+import { getState } from "./state";
+
+const { fontSize, lineNumbers, minimap, theme } = getState();
 
 const EDITOR_LAYOUT_OPTIONS = {
+  fontSize,
+  theme,
+  lineNumbers,
+  minimap: {
+    enabled: minimap,
+  },
   automaticLayout: true,
-  fontSize: 14,
-  theme: "vs-dark",
   fixedOverflowWidgets: true,
   scrollBeyondLastLine: false,
   roundedSelection: false,
   padding: {
     top: 16,
-  },
-  lineNumbers: "off",
-  minimap: {
-    enabled: false,
   },
 };
 

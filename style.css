@@ -1,3 +1,6 @@
+@import url("./css/aside.css");
+@import url("./css/settings.css");
+
 * {
   box-sizing: border-box;
 }
@@ -6,7 +9,6 @@
   box-sizing: inherit;
 }
 body {
-  background-color: #f1f1f1;
   color: #333;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: 0;
@@ -15,12 +17,15 @@ body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
 }
 html,
 body,
-.grid {
+.view {
   height: 100vh;
+  width: 100%;
   padding: 0;
+  background-color: #2f363d;
 }
 .grid {
   display: grid;
@@ -29,11 +34,11 @@ body,
 }
 .vertical-gutter {
   grid-area: 1 / 2 / 4 / 2;
-  background-color: #fff;
+  background-color: #2f363d88;
 }
 .horizontal-gutter {
   grid-area: 2 / 1 / 2 / 4;
-  background-color: #fff;
+  background-color: #2f363d88;
 }
 iframe {
   width: 100%;

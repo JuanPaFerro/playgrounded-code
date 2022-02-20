@@ -1,0 +1,26 @@
+.settings {
+    & .settings-content {
+      display: grid;
+      place-content: center;
+      height: 100%;
+    }
+  
+    & .settings-type {
+      opacity: 0.6;
+    }
+  
+    & .settings-item {
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 500px;
+      padding: 1em;
+  
+    }
+  
+    & .settings-item:hover {
+      background: rgba(128, 128, 128, 0.14);
+    }
+  }
+  

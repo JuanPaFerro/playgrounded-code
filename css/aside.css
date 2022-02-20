@@ -1,0 +1,18 @@
+aside {
+  background: #2d323c;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+aside > header > button, aside > footer > button {
+  background: #2d323c;
+  border: none;
+}
+
+aside > header > button > svg , aside > footer > button > svg {
+  background: #2d323c;
+  height: 25px;
+  width: 25px;
+}
