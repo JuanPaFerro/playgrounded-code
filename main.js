@@ -4,6 +4,7 @@ import { delay } from "./utilities/delay";
 import { $ } from "./utilities/dom-managment";
 import Split from "split-grid";
 import { createHtml } from "./utilities/createHtml";
+import { subscribe } from "./state";
 
 Split({
   columnGutters: [
@@ -37,7 +38,7 @@ $("iframe").setAttribute("srcdoc", htmlToProcess);
 
 const htmlEditor = createEditor({
   element: $html,
-  alue: html,
+  value: html,
   language: "html",
 });
 const cssEditor = createEditor({
@@ -49,6 +50,18 @@ const jsEditor = createEditor({
   element: $js,
   value: js,
   language: "javascript",
+});
+
+subscribe((state) => {
+  const EDITORS = [htmlEditor, cssEditor, jsEditor];
+  EDITORS.forEach((editor) => {
+    const { minimap, ...restOfOptions } = state;
+    const newOptions = { ...restOfOptions, minimap: { enabled: minimap } };
+    editor.updateOptions({
+      ...editor.getRawOptions(),
+      ...newOptions,
+    });
+  });
 });
 
 const UPDATE_DELAY_TIME = 200;
