@@ -2,26 +2,11 @@ import { createEditor } from "./editor";
 import { encode, decode } from "js-base64";
 import { delay } from "./utilities/delay";
 import { $ } from "./utilities/dom-managment";
-import Split from "split-grid";
 import { createHtml } from "./utilities/createHtml";
 import { subscribe } from "./state";
 import "./aside";
 import "./settings";
-
-Split({
-  columnGutters: [
-    {
-      track: 1,
-      element: $(".vertical-gutter"),
-    },
-  ],
-  rowGutters: [
-    {
-      track: 1,
-      element: $(".horizontal-gutter"),
-    },
-  ],
-});
+import "./grid";
 
 const $js = $("#js");
 const $css = $("#css");
