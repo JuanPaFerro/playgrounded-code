@@ -13,7 +13,6 @@ const $css = $("#css");
 const $html = $("#html");
 
 const { pathname } = window.location;
-!pathname.includes("|") && (window.location.pathname = "/||");
 const [encodedHtml, encodedCss, encodedJs] = pathname.slice(1).split("|");
 
 const html = decode(encodedHtml) ?? "";
