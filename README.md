@@ -16,9 +16,12 @@ the first step is, as always, to clone this repo. Once you have done with that, 
 to run the project in dev mode execute:
 `$npm run dev`
 
-**due to an incompatibility of some web browsers like mozilla firefox with the web workers in the dev mode, the project will not perform as expected, for this cases i recommend to run a production build with the command:  **
+due to an incompatibility of some web browsers like mozilla firefox with the web workers in the dev mode, the project will not perform as expected, for this cases i recommend to run a production build with the command:
+
 `$npm run build`
+
 after the build is complete run :
+
 `$npm run preview`
 
 **you can also find a live demo of this project at [playgrounded-code](https://playgrounded-code.vercel.app "playgrounded-code") **
