@@ -13,12 +13,11 @@ const $css = $("#css");
 const $html = $("#html");
 
 const { pathname } = window.location;
-!pathname.includes("|") && (window.location.pathname = "/||");
 const [encodedHtml, encodedCss, encodedJs] = pathname.slice(1).split("|");
 
-const html = decode(encodedHtml) ?? "";
-const css = decode(encodedCss) ?? "";
-const js = decode(encodedJs) ?? "";
+const html = pathname.includes("|") ? decode(encodedHtml) : "";
+const css = pathname.includes("|") ? decode(encodedCss) : "";
+const js = pathname.includes("|") ? decode(encodedJs) : "";
 
 const htmlToProcess = createHtml({ html, js, css });
 $("iframe").setAttribute("srcdoc", htmlToProcess);
