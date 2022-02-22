@@ -10,7 +10,7 @@ playgrounded-code is a simple but effective code playground for html, css and ja
 ------------
 
 
-the first step is, as always, to clone this repo. Once you have done with that the move to the repo directory and execute:
+the first step is, as always, to clone this repo. Once you have done with that, move to the repo directory and execute:
 `$npm install`
 
 to run the project in dev mode execute:
