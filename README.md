@@ -2,6 +2,7 @@
 
 ------------
 
+![playgrounded-code-screenshot](https://i.ibb.co/kB8JRCY/playgrounded-code.png)
 
 playgrounded-code is a simple but effective code playground for html, css and javascript. It allows you to have a live view of your code working (or not 😉)
 
